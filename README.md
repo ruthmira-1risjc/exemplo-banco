@@ -58,12 +58,9 @@
 
 </details>
 
-<details>
-<summary>Banco</summary>
+### Banco
 
 ![alt text](img/bancoPP.jpg)
-
-</details>
 
 <details>
 <summary>Relacionamentos</summary>
@@ -179,12 +176,9 @@
 </details>
 
 
-<details>
-<summary>Diagrama:</summary>
+### Diagrama
 
 ![alt text](img/diagramPP.png)
-
-</details>
 
 <details>
 <summary>Tabelas</summary>
