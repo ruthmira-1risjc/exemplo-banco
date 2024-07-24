@@ -1,5 +1,8 @@
 # Estrutura do Banco Intranet
 
+<details>
+<summary>Entidades</summary>
+
 ### Entidades:
 
 #### Grupo
@@ -53,10 +56,17 @@
 - **perfil_id**: Chave estrangeira para a tabela Perfil.
 - **elementos**: Identificadores de elementos específicos da página (ex: botões, ações).
 
-### Banco
+</details>
+
+<details>
+<summary>Banco</summary>
+
 ![alt text](img/bancoPP.jpg)
 
-### Relacionamentos
+</details>
+
+<details>
+<summary>Relacionamentos</summary>
 
 ### 1. Grupo e Perfil
 - **Descrição**: Um grupo está associado a um perfil específico. Um perfil pode ser compartilhado entre vários grupos.
@@ -118,6 +128,10 @@
   - **Aplicacao (0, N) — (1, 1) Log**: Cada aplicação pode gerar zero ou mais logs.
   - **Log (1, 1) — (1, N) Aplicacao**: Cada log está associado a uma única aplicação.
 
+</details>
+
+<details>
+<summary>Pontos Importantes</summary>
 
 ## **Pontos Importantes**
 
@@ -135,6 +149,11 @@
 
 4. **Auditoria e Rastreabilidade**
    - **Log**: Registra atividades dos usuários e ações realizadas nas aplicações.
+
+</details>
+
+<details>
+<summary>Fluxo de Login</summary>
 
 ## **Fluxo de Login**
 
@@ -154,19 +173,21 @@
    - **Permissões de Acesso**: Configura o acesso às aplicações e páginas do sistema de acordo com as permissões do perfil.
    - **Permissões de Exibição**: Configura quais elementos (como botões e ações) são visíveis nas páginas com base nas permissões de exibição do perfil.
 
-5. **Registro de Log**
-   - Registra a tentativa de login e outras ações relevantes no sistema (tabela `Log`).
-   - Inclui informações como o ID do usuário, a aplicação, a data e hora, e uma mensagem descritiva.
+5. **Registro de Atividade**
+   - O sistema gera logs para registrar a atividade de login, associando-a ao usuário e à aplicação em que a atividade ocorreu.
 
-6. **Redirecionamento e Acesso**
-   - Após a autenticação bem-sucedida e a configuração do ambiente, o usuário é redirecionado para a página inicial do sistema ou para a página específica definida pelo perfil.
+</details>
 
-7. **Gerenciamento de Sessão**
-   - O sistema mantém a sessão ativa do usuário, controlando o acesso às diferentes partes do sistema conforme as permissões definidas.
 
-## Diagrama:
+<details>
+<summary>Diagrama:</summary>
 
 ![alt text](img/diagramPP.png)
+
+</details>
+
+<details>
+<summary>Tabelas</summary>
 
 ### Grupo
 - `nome_grupo` : VARCHAR(255), PRIMARY KEY
@@ -217,6 +238,8 @@
 - `id` : INT, PRIMARY KEY, AUTO_INCREMENT
 - `perfil_id` : INT, FOREIGN KEY (referência à tabela Perfil)
 - `elementos` : TEXT // Pode conter identificadores de elementos específicos da página (ex: botões, ações)
+
+</details>
 
 ### Normalização do banco
 
