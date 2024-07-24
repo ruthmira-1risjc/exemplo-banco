@@ -54,7 +54,7 @@
 - **elementos**: Identificadores de elementos específicos da página (ex: botões, ações).
 
 ### Diagrama
-![alt text](img/bancoPP.jpg)
+![C:\Users\ruth.silva\Desktop\exemplo-banco\img\bancoPP.jpg](../img/bancoPP.jpg)
 
 ### Relacionamentos
 

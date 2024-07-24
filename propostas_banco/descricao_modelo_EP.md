@@ -53,7 +53,7 @@
 <br>
 
 ## Diagrama
-![C:\Users\ruth.silva\Desktop\exemplo-banco\img\bancoEP.jpg](<img/bancoEP.jpg>)
+![alt text](../img/bancoEP.jpg)
 
 
 ### Relacionamentos
