@@ -166,7 +166,7 @@
 
 ## Diagrama:
 
-![alt text](img/diagramPP.svg)
+![alt text](img/diagramPP.png)
 
 ### Grupo
 - `nome_grupo` : VARCHAR(255), PRIMARY KEY
