@@ -1,23 +1,26 @@
 # Estrutura do Banco Intranet
 
+## Banco
+![alt text](img/bancoPP.jpg)
+
 <details>
 <summary>Entidades</summary>
 
-### Entidades:
+## Entidades:
 
-#### Grupo
+### Grupo
 - **nome_grupo**: Nome do grupo e identificador único.
 - **descricao**: Descrição do grupo.
 - **perfil_id**: Chave estrangeira para a tabela Perfil.
 
-#### Pessoa
+### Pessoa
 - **id**: Identificador único da pessoa.
 - **foto3x4**: Foto da pessoa (BLOB).
 - **nome**: Nome completo do usuário.
 - **email**: Endereço de email do usuário.
 - **data_criacao**: Data de criação da conta.
 
-#### Usuario
+### Usuario
 - **id**: Identificador único do usuário (referência à tabela Pessoa).
 - **usuario**: Nome de usuário (único).
 - **senha**: Senha do usuário (armazenada de forma segura, e.g., hash).
@@ -25,21 +28,21 @@
 - **ativo**: Indicador se a conta está ativa.
 - **nome_grupo**: Chave estrangeira para a tabela Grupo.
 
-#### Aplicacao
+### Aplicacao
 - **nome**: Nome da aplicação e identificador único.
 - **descricao**: Descrição da aplicação.
 - **caminhoExecutavel**: Caminho do executável na rede.
 - **icone**: Ícone da aplicação (BLOB).
 - **categoria**: Categoria da aplicação (coluna, flag, ou enumerador).
 
-#### Permissao
+### Permissao
 - **id**: Identificador único da permissão.
 - **nome**: Nome da permissão.
 - **descricao**: Descrição da permissão.
 - **perfil_id**: Chave estrangeira para a tabela Perfil.
 - **nome_aplicacao**: Chave estrangeira para a tabela Aplicacao.
 
-#### Log
+### Log
 - **id**: Identificador único do log.
 - **tipo**: Nome do tipo do log.
 - **usuario_id**: Chave estrangeira para a tabela Usuario.
@@ -47,23 +50,21 @@
 - **datahora**: Data e hora do log.
 - **mensagem**: Mensagem do log.
 
-#### Perfil
+### Perfil
 - **id**: Identificador único do perfil.
 - **descricao**: Descrição do perfil.
 
-#### Exibicao
+### Exibicao
 - **id**: Identificador único da exibição.
 - **perfil_id**: Chave estrangeira para a tabela Perfil.
 - **elementos**: Identificadores de elementos específicos da página (ex: botões, ações).
 
 </details>
 
-### Banco
-
-![alt text](img/bancoPP.jpg)
-
 <details>
 <summary>Relacionamentos</summary>
+
+## Relacionamentos
 
 ### 1. Grupo e Perfil
 - **Descrição**: Um grupo está associado a um perfil específico. Um perfil pode ser compartilhado entre vários grupos.
@@ -176,12 +177,14 @@
 </details>
 
 
-### Diagrama
+## Diagrama
 
 ![alt text](img/diagramPP.png)
 
 <details>
 <summary>Tabelas</summary>
+
+## Tabelas
 
 ### Grupo
 - `nome_grupo` : VARCHAR(255), PRIMARY KEY
@@ -235,7 +238,16 @@
 
 </details>
 
-### Normalização do banco
+<details>
+<summary>Normalização do banco</summary>
+
+<details>
+
+## Normalização do banco
+EM CONSTRUÇÃO
+
+</details>
+
 
 
 
