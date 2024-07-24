@@ -1,0 +1,61 @@
+erDiagram
+    Grupo ||--o{ Perfil : possui
+    Usuario ||--o{ Log : tem
+    Usuario ||--o{ Grupo : pertence
+    Usuario ||--o{ Pessoa : tem
+    Aplicacao ||--o{ Log : gera
+    Permissao ||--o{ Aplicacao : exibe
+    Perfil ||--o{ Permissao : define
+    Perfil ||--o{ Exibicao : configura
+
+    Grupo {
+        string nome_grupo PK
+        string descricao
+        int perfil_id FK
+    }
+    Pessoa {
+        int id PK
+        blob foto3x4
+        string nome
+        string email
+        datetime data_criacao
+    }
+    Usuario {
+        int id PK, FK
+        string usuario "Unique username"
+        string senha "Hashed password"
+        datetime ultimo_login
+        boolean ativo
+        string nome_grupo FK
+    }
+    Aplicacao {
+        string nome PK
+        string descricao
+        string caminhoExecutavel
+        blob icone
+        string categoria
+    }
+    Permissao {
+        int id PK
+        string nome
+        string descricao
+        int perfil_id FK
+        string nome_aplicacao FK
+    }
+    Log {
+        int id PK
+        string tipo
+        int usuario_id FK
+        string nome_aplicacao FK
+        datetime datahora
+        string mensagem
+    }
+    Perfil {
+        int id PK
+        string descricao
+    }
+    Exibicao {
+        int id PK
+        int perfil_id FK
+        string elementos
+    }

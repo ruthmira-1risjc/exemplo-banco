@@ -53,7 +53,7 @@
 - **perfil_id**: Chave estrangeira para a tabela Perfil.
 - **elementos**: Identificadores de elementos específicos da página (ex: botões, ações).
 
-### Diagrama
+### Banco
 ![alt text](img/bancoPP.jpg)
 
 ### Relacionamentos
@@ -164,8 +164,9 @@
 7. **Gerenciamento de Sessão**
    - O sistema mantém a sessão ativa do usuário, controlando o acesso às diferentes partes do sistema conforme as permissões definidas.
 
-## Tabelas:
+## Diagrama:
 
+![alt text](img/diagramPP.svg)
 
 ### Grupo
 - `nome_grupo` : VARCHAR(255), PRIMARY KEY
