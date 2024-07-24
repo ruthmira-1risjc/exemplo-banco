@@ -241,8 +241,6 @@
 <details>
 <summary>Normalização do banco</summary>
 
-<details>
-
 ## Normalização do banco
 EM CONSTRUÇÃO
 
