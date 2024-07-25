@@ -3,9 +3,6 @@
 ## Banco
 
 
-<details>
-<summary>Entidades</summary>
-
 ## Entidades:
 
 **Grupo**
@@ -61,11 +58,6 @@
    - **PerfilPermissaoId**: Chave estrangeira para a tabela `PerfilPermissao`.
    - **Elemento**: Identificadores de elementos específicos da página (ex: botões, ações).
 
-</details>
-
-<details>
-<summary>Tabelas</summary>
-
 ## Tabelas
 
 #### Grupo
@@ -120,10 +112,6 @@
 - **Id**: INT (Chave primária)
 - **PerfilPermissaoId**: INT (Chave estrangeira para `PerfilPermissao.Id`)
 - **Elemento**: STRING
-</details>
-
-<details>
-<summary>Relacionamentos</summary>
 
 ## Relacionamentos
 
@@ -169,13 +157,8 @@
      - **TipoRecurso (1, N) — (0, N) Recurso**: Um tipo de recurso pode estar associado a zero ou mais recursos.
      - **Recurso (1, 1) — (1, 1) TipoRecurso**: Cada recurso está associado a um único tipo de recurso.
 
-</details>
 
-## Diagrama
 ![alt text](<img/modelo final.png>)
-
-<details>
-<summary>Diagrama Mermaid Code</summary>
 
 ## Diagrama ER
 
@@ -256,10 +239,6 @@ erDiagram
     Recurso ||--o{ Log : "gera"
     Recurso ||--o{ TipoRecurso : "contem"
 ```
-</details>
-
-<details>
-<summary>Pontos Importantes</summary>
 
 ## Pontos Importantes
 
@@ -315,11 +294,6 @@ erDiagram
 **Exemplo:**
 - A aplicação "Sistema de Finanças" pode gerar logs de eventos como erros ou acessos, que ajudam a monitorar o uso e detectar falhas.
 
-</details>
-
-<details>
-<summary>Fluxo de Login</summary>
-
 ## Fluxo de Login
 
 1. **Autenticação Externa**
@@ -351,11 +325,6 @@ erDiagram
    - **Manutenção da Sessão:** O sistema mantém a sessão ativa do usuário, garantindo que o acesso às diferentes partes do sistema seja controlado conforme as permissões do perfil.
    - **Controle de Acesso:** Durante a sessão, o sistema verifica continuamente as permissões para garantir que o usuário possa acessar apenas as áreas permitidas.
 
-</details>
-
-<details>
-<summary>Diagrama da Sequência do Login</summary>
-
 ![alt text](img/Diagrama-login.png)
 
 ## Diagrama de Sequência
@@ -380,4 +349,3 @@ sequenceDiagram
     LocalSystem->>SessionManager: Mantém sessão ativa
 ```
 
-</details>
