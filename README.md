@@ -182,65 +182,65 @@ O diagrama a seguir representa visualmente o relacionamento entre as tabelas:
 erDiagram
 
     Grupo {
-        INT id PK
-        STRING nome_grupo
-        STRING descricao
+        INT Id PK
+        STRING NomeGrupo
+        STRING Descricao
     }
     
     Usuario {
-        INT id PK
-        INT icone_id FK
-        STRING nome
-        STRING email
-        DATETIME data_criacao
-        STRING usuario
-        INT grupo_id FK
+        INT Id PK
+        INT IconeId FK
+        STRING Nome
+        STRING Email
+        DATETIME DataCriacao
+        STRING Usuario
+        INT GrupoId FK
     }
 
     
     Icone {
-        INT id PK
-        BLOB foto3x4
-        BLOB icone
+        INT Id PK
+        BLOB Foto3x4
+        BLOB IconeRecurso
     }
     
     Recurso {
-        INT id PK
-        STRING nome
-        STRING descricao
-        STRING rota
-         INT icone_id FK
-        STRING tipo_recurso_id FK
+        INT Id PK
+        STRING Nome
+        STRING Descricao
+        STRING Rota
+         INT IconeId FK
+        STRING TipoRecursoId FK
     }
 
      TipoRecurso {
-        INT id PK
-        STRING descricao
-        STRING nome
+        INT Id PK
+        STRING Descricao
+        STRING Nome
     }
     
     Log {
-        INT id PK
-        STRING tipo
-        DATETIME ultimo_login
-        INT usuario_id FK
-        INT aplicacao_id FK
-        DATETIME datahora
-        STRING mensagem
+        INT Id PK
+        STRING Tipo
+        DATETIME UltimoLogin
+        INT UsuarioId FK
+        INT RecursoId FK
+        DATETIME Datahora
+        STRING Mensagem
     }
     
     PerfilPermissao {
-        INT id PK
-        STRING nome
-        STRING descricao
-        INT grupo_id FK
-        INT aplicacao_id FK
+        INT Id PK
+        STRING Nome
+        STRING Descricao
+        INT GrupoId FK
+        INT RecursoId FK
     }
     
     Exibicao {
-        INT id PK
-        INT perfil_permissao_id FK
-        STRING elementos
+        INT Id PK
+        INT PerfilPermissaoId FK
+        STRING Elemento
     }
     
     Grupo ||--o{ Usuario : "possui"
