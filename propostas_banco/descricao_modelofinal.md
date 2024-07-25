@@ -7,7 +7,7 @@
 
 **Grupo**
    - **Id**: Identificador único.
-   - **NomeGrupo**: Nome do grupo.
+   - **Nome**: Nome do grupo.
    - **Descricao**: Descrição do grupo.
 
 2. **Usuario**
@@ -46,23 +46,23 @@
    - **Datahora**: Data e hora do log.
    - **Mensagem**: Mensagem do log.
 
-7. **PerfilPermissao**
+7. **Permissao**
    - **Id**: Identificador único.
-   - **Nome**: Nome do perfil/permissão. Pode representar um tipo ou nome descritivo.
-   - **Descricao**: Descrição do perfil/permissão.
+   - **Nome**: Nome da permissão. Pode representar um tipo ou nome descritivo.
+   - **Descricao**: Descrição da permissão.
    - **GrupoId**: Chave estrangeira para a tabela `Grupo`.
    - **RecursoId**: Chave estrangeira para a tabela `Recurso`.
 
 8. **Exibicao**
    - **Id**: Identificador único.
-   - **PerfilPermissaoId**: Chave estrangeira para a tabela `PerfilPermissao`.
+   - **PermissaoId**: Chave estrangeira para a tabela `Permissao`.
    - **Elemento**: Identificadores de elementos específicos da página (ex: botões, ações).
 
 ## Tabelas
 
 #### Grupo
 - **Id**: INT (Chave primária)
-- **NomeGrupo**: STRING
+- **Nome**: STRING
 - **Descricao**: STRING
 
 #### Usuario
@@ -101,7 +101,7 @@
 - **Datahora**: DATETIME
 - **Mensagem**: STRING
 
-#### PerfilPermissao
+#### Permissao
 - **Id**: INT (Chave primária)
 - **Nome**: STRING
 - **Descricao**: STRING
@@ -110,7 +110,7 @@
 
 #### Exibicao
 - **Id**: INT (Chave primária)
-- **PerfilPermissaoId**: INT (Chave estrangeira para `PerfilPermissao.Id`)
+- **PermissaoId**: INT (Chave estrangeira para `Permissao.Id`)
 - **Elemento**: STRING
 
 ## Relacionamentos
@@ -121,23 +121,23 @@
      - **Grupo (1, N) — (0, N) Usuario**: Um grupo pode ter zero ou mais usuários.
      - **Usuario (1, 1) — (1, 1) Grupo**: Cada usuário pertence a um único grupo.
 
-2. **Grupo e PerfilPermissao**
-   - **Descrição**: Um grupo pode ter várias permissões e perfis associados. Cada perfil pode estar associado a vários grupos.
+2. **Grupo e Permissao**
+   - **Descrição**: Um grupo pode ter várias permissões associadas. Cada permissão pode estar associado a vários grupos.
    - **Cardinalidade**: Muitos para muitos (N).
-     - **Grupo (1, N) — (0, N) PerfilPermissao**: Um grupo pode ter zero ou mais permissões/perfis.
-     - **PerfilPermissao (1, 1) — (1, N) Grupo**: Cada perfil/permissão pode estar associado a vários grupos.
+     - **Grupo (1, N) — (0, N) Permissao**: Um grupo pode ter zero ou mais permissões/perfis.
+     - **Permissao (1, 1) — (1, N) Grupo**: Cada permissão pode estar associado a vários grupos.
 
-3. **Recurso e PerfilPermissao**
-   - **Descrição**: Um recurso pode ter várias permissões/perfis associados. Uma permissão/perfil está associada a um recurso.
+3. **Recurso e Permissao**
+   - **Descrição**: Um recurso pode ter várias permissões associadas. Uma permissão está associada a um recurso.
    - **Cardinalidade**: Muitos para muitos (N).
-     - **Recurso (1, N) — (0, N) PerfilPermissao**: Um recurso pode ter zero ou mais permissões/perfis.
-     - **PerfilPermissao (1, 1) — (1, N) Recurso**: Cada permissão/perfil está associada a um recurso.
+     - **Recurso (1, N) — (0, N) Permissao**: Um recurso pode ter zero ou mais permissões/perfis.
+     - **Permissao (1, 1) — (1, N) Recurso**: Cada permissão está associada a um recurso.
 
-4. **PerfilPermissao e Exibicao**
-   - **Descrição**: Define quais elementos de uma página são visíveis para um perfil específico. Cada exibição está associada a um único perfil/permissão.
+4. **Permissao e Exibicao**
+   - **Descrição**: Define quais elementos de uma página são visíveis para um permissão específica. Cada exibição está associada a um única permissão.
    - **Cardinalidade**: Um para muitos (1).
-     - **PerfilPermissao (1, N) — (0, N) Exibicao**: Um perfil/permissão pode ter zero ou mais exibições.
-     - **Exibicao (1, 1) — (1, 1) PerfilPermissao**: Cada exibição está associada a um único perfil/permissão.
+     - **Permissao (1, N) — (0, N) Exibicao**: Um permissão pode ter zero ou mais exibições.
+     - **Exibicao (1, 1) — (1, 1) Permissao**: Cada exibição está associada a um único permissão.
 
 5. **Usuario e Log**
    - **Descrição**: Um usuário pode gerar vários logs. Cada log é associado a um único usuário.
@@ -168,71 +168,73 @@ O diagrama a seguir representa visualmente o relacionamento entre as tabelas:
 erDiagram
 
     Grupo {
-        INT id PK
-        STRING nome_grupo
-        STRING descricao
+        INT Id PK
+        STRING Nome
+        STRING Descricao
     }
     
     Usuario {
-        INT id PK
-        INT icone_id FK
-        STRING nome
-        STRING email
-        DATETIME data_criacao
-        STRING usuario
-        INT grupo_id FK
+        INT Id PK
+        INT IconeId FK
+        STRING Nome
+        STRING Email
+        DATETIME DataCriacao
+        STRING Usuario
+        INT GrupoId FK
     }
 
     
     Icone {
-        INT id PK
-        BLOB foto3x4
-        BLOB icone
+        INT Id PK
+        BLOB Foto3x4
+        BLOB IconeRecurso
     }
     
     Recurso {
-        INT id PK
-        STRING nome
-        STRING descricao
-        STRING rota
-         INT icone_id FK
-        STRING tipo_recurso_id FK
+        INT Id PK
+        STRING Nome
+        STRING Descricao
+        STRING Rota
+         INT IconeId FK
+        STRING TipoRecursoId FK
     }
 
      TipoRecurso {
-        INT id PK
-        STRING descricao
-        STRING nome
+        INT Id PK
+        STRING Descricao
+        STRING Nome
     }
     
     Log {
-        INT id PK
-        STRING tipo
-        DATETIME ultimo_login
-        INT usuario_id FK
-        INT aplicacao_id FK
-        DATETIME datahora
-        STRING mensagem
+        INT Id PK
+        STRING Tipo
+        DATETIME UltimoLogin
+        INT UsuarioId FK
+        INT RecursoId FK
+        DATETIME Datahora
+        STRING Mensagem
     }
     
-    PerfilPermissao {
-        INT id PK
-        STRING nome
-        STRING descricao
-        INT grupo_id FK
-        INT aplicacao_id FK
+    Permissao {
+        INT Id PK
+        STRING Nome
+        STRING Descricao
+        INT GrupoId FK
+        INT RecursoId FK
     }
     
     Exibicao {
-        INT id PK
-        INT perfil_permissao_id FK
-        STRING elementos
+        INT Id PK
+        STRING Nome
+        STRING Descricao
+        INT PermissaoId FK
+
     }
     
     Grupo ||--o{ Usuario : "possui"
-    Grupo ||--o{ PerfilPermissao : "tem"
-    PerfilPermissao ||--o{ Recurso : "associado a"
-    PerfilPermissao ||--o{ Exibicao : "define"
+    Grupo ||--o{ Permissao : "tem"
+    Permissao ||--o{ Recurso : "associado a"
+    Permissao ||--o{ Exibicao : "define"
     Usuario ||--o{ Log : "gera"
     Usuario ||--o{ Icone : "possui"
     Recurso ||--o{ Icone : "possui"
@@ -251,28 +253,28 @@ erDiagram
 - Um grupo chamado "Administração" pode ter usuários como "Ana", "João" e "Carlos".
 - O usuário "Ana" está associado ao grupo "Administração", e seu `GrupoId` é a chave estrangeira que referencia o `Id` do grupo.
 
-### 2. **Grupo e PerfilPermissao**
+### 2. **Grupo e Permissao**
 
-- **Relacionamento:** Um grupo pode ter várias permissões/perfis associados, e cada perfil/permissão pode estar vinculado a vários grupos.
+- **Relacionamento:** Um grupo pode ter várias permissões/perfis associados, e cada permissão pode estar vinculado a vários grupos.
 - **Importância:** Esse relacionamento permite que diferentes grupos tenham acesso a diferentes conjuntos de permissões e perfis, facilitando a personalização do acesso às aplicações.
 
 **Exemplo:**
 - O grupo "Administração" pode ter um perfil chamado "Perfil Completo" que dá acesso total a todas as aplicações.
 - O grupo "Usuários" pode ter um perfil chamado "Perfil Básico" com permissões limitadas.
 
-### 3. **Aplicacao e PerfilPermissao**
+### 3. **Aplicacao e Permissao**
 
-- **Relacionamento:** Cada aplicação pode estar associada a várias permissões/perfis, e cada perfil/permissão pode estar associado a várias aplicações.
+- **Relacionamento:** Cada aplicação pode estar associada a várias permissões/perfis, e cada permissão pode estar associado a várias aplicações.
 - **Importância:** Isso permite que as permissões de acesso às aplicações sejam flexíveis e adaptáveis às necessidades dos grupos.
 
 **Exemplo:**
 - A aplicação "Sistema de Finanças" pode ter permissões associadas como "Visualizar Relatórios" e "Editar Dados".
 - O perfil "Perfil Completo" pode ter acesso a todas as permissões da aplicação "Sistema de Finanças", enquanto o perfil "Perfil Básico" pode ter acesso apenas à visualização de relatórios.
 
-### 4. **PerfilPermissao e Exibicao**
+### 4. **Permissao e Exibicao**
 
-- **Relacionamento:** Um perfil/permissão pode definir várias exibições, e cada exibição está associada a um único perfil/permissão.
-- **Importância:** Define quais elementos (como botões, seções, etc.) são visíveis para cada perfil. Isso é útil para personalizar a interface com base nas permissões.
+- **Relacionamento:** Uma permissão pode definir várias exibições, e cada exibição está associada a um único permissão.
+- **Importância:** Define quais elementos (como botões, seções, etc.) são visíveis para cada grupo. Isso é útil para personalizar a interface com base nas permissões.
 
 **Exemplo:**
 - O perfil "Perfil Completo" pode ter exibições que mostram todas as seções do sistema.
@@ -302,27 +304,26 @@ erDiagram
    - **Resposta do Serviço de Autenticação:** O serviço retorna um resultado indicando se as credenciais são válidas ou não. Se válidas, o serviço pode fornecer um token de autenticação ou um identificador único do usuário.
 
 2. **Verificação de Credenciais**
-   - **Resultado da Autenticação:** Se a autenticação for bem-sucedida, o sistema local (o sistema que gerencia o perfil e permissões) recebe um token ou identificador do usuário.
-   - **Recuperação do Perfil:** O sistema local utiliza o identificador do usuário para recuperar o perfil associado ao grupo do usuário no banco de dados, consultando a tabela `Usuario` para encontrar o `GrupoId`.
+   - **Resultado da Autenticação:** Se a autenticação for bem-sucedida, o sistema local (o sistema que gerencia as permissões) recebe um token ou identificador do usuário.
+   - **Recuperação do Permissões:** O sistema local utiliza o identificador do usuário para recuperar o permissoes associadas ao grupo do usuário no banco de dados, consultando a tabela `Usuario` para encontrar o `GrupoId`.
 
-3. **Recuperação do Perfil e Permissões**
+3. **Recuperação das Permissões**
    - **Determinação do Grupo:** O sistema consulta a tabela `Usuario` para identificar o grupo ao qual o usuário pertence usando o `GrupoId`.
-   - **Recuperação do Perfil:** O sistema local recupera o perfil associado ao grupo do usuário na tabela `PerfilPermissao`.
-   - **Permissões de Acesso e Exibição:** O sistema consulta as tabelas `PerfilPermissao` e `Exibicao` para obter as permissões de acesso e os elementos visíveis para o usuário com base em seu perfil.
+   - **Permissões de Acesso e Exibição:** O sistema consulta as tabelas `Permissao` e `Exibicao` para obter as permissões de acesso e os elementos visíveis para o usuário.
 
 4. **Configuração do Ambiente do Usuário**
-   - **Permissões de Acesso:** O sistema ajusta o acesso às aplicações e páginas do sistema de acordo com as permissões associadas ao perfil.
-   - **Permissões de Exibição:** O sistema configura quais elementos são visíveis nas páginas (como botões e seções) com base nas permissões de exibição associadas ao perfil.
+   - **Permissões de Acesso:** O sistema ajusta o acesso às aplicações e páginas do sistema de acordo com as permissões.
+   - **Permissões de Exibição:** O sistema configura quais elementos são visíveis nas páginas (como botões e seções) com base nas permissões de exibição.
 
 5. **Registro de Log**
    - **Criação de Log:** O sistema registra a tentativa de login e outras ações relevantes na tabela `Log`.
    - **Informações do Log:** Inclui informações como o `UsuarioId`, o `AplicacaoId`, a `Datahora`, e uma mensagem descritiva (por exemplo, "Login bem-sucedido").
 
 6. **Redirecionamento e Acesso**
-   - **Redirecionamento:** Após a autenticação e configuração bem-sucedida do ambiente, o usuário é redirecionado para a página inicial do sistema ou para uma página específica conforme definido pelas permissões do perfil.
+   - **Redirecionamento:** Após a autenticação e configuração bem-sucedida do ambiente, o usuário é redirecionado para a página inicial do sistema ou para uma página específica conforme definido pelas permissões.
 
 7. **Gerenciamento de Sessão**
-   - **Manutenção da Sessão:** O sistema mantém a sessão ativa do usuário, garantindo que o acesso às diferentes partes do sistema seja controlado conforme as permissões do perfil.
+   - **Manutenção da Sessão:** O sistema mantém a sessão ativa do usuário, garantindo que o acesso às diferentes partes do sistema seja controlado conforme as permissões.
    - **Controle de Acesso:** Durante a sessão, o sistema verifica continuamente as permissões para garantir que o usuário possa acessar apenas as áreas permitidas.
 
 
@@ -342,8 +343,8 @@ sequenceDiagram
     LoginApp->>AuthService: Envia credenciais para autenticação
     AuthService-->>LoginApp: Retorna resultado (token/identificador)
     LoginApp->>LocalSystem: Envia identificador de usuário
-    LocalSystem->>Database: Consulta perfil associado ao grupo
-    Database-->>LocalSystem: Retorna perfil e permissões
+    LocalSystem->>Database: Consulta permissao associada ao grupo
+    Database-->>LocalSystem: Retorna permissões
     LocalSystem->>Database: Registra tentativa de login
     Database-->>LocalSystem: Confirmação de registro
     LocalSystem->>User: Redireciona para página inicial
