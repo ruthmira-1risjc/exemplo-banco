@@ -171,9 +171,6 @@
 
 </details>
 
-## Diagrama
-![alt text](<img/modelo final.png>)
-
 <details>
 <summary>Diagrama Mermaid Code</summary>
 
@@ -355,8 +352,6 @@ erDiagram
 
 <details>
 <summary>Diagrama da Sequência do Login</summary>
-
-![alt text](img/Diagrama-login.png)
 
 ## Diagrama de Sequência
 

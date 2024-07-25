@@ -158,11 +158,11 @@
      - **Recurso (1, 1) — (1, 1) TipoRecurso**: Cada recurso está associado a um único tipo de recurso.
 
 
-![alt text](<img/modelo final.png>)
-
 ## Diagrama ER
 
 O diagrama a seguir representa visualmente o relacionamento entre as tabelas:
+
+![alt text](<../img/modelo final.png>)
 
 ```mermaid
 erDiagram
@@ -325,9 +325,10 @@ erDiagram
    - **Manutenção da Sessão:** O sistema mantém a sessão ativa do usuário, garantindo que o acesso às diferentes partes do sistema seja controlado conforme as permissões do perfil.
    - **Controle de Acesso:** Durante a sessão, o sistema verifica continuamente as permissões para garantir que o usuário possa acessar apenas as áreas permitidas.
 
-![alt text](img/Diagrama-login.png)
 
 ## Diagrama de Sequência
+
+![alt text](../img/Diagrama-login.png)
 
 ```mermaid
 sequenceDiagram
