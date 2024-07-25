@@ -25,7 +25,7 @@
 3. **Icone**
    - **Id**: Identificador único.
    - **Foto3x4**: Foto da pessoa (BLOB).
-   - **Icone**: Ícone associado (BLOB).
+   - **IconeRecurso**: Ícone associado (BLOB).
 
 4. **Recurso**
    - **Id**: Identificador único.
@@ -84,7 +84,7 @@
 #### Icone
 - **Id**: INT (Chave primária)
 - **Foto3x4**: BLOB
-- **Icone**: BLOB
+- **IconeRecurso**: BLOB
 
 #### Recurso
 - **Id**: INT (Chave primária)
