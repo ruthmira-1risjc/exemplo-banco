@@ -14,66 +14,63 @@
 <body>
     <div class="mermaid">
         erDiagram
-        Grupo ||--o{ Perfil : possui
-        Usuario ||--o{ Log : tem
-        Usuario ||--o{ Grupo : pertence
-        Usuario ||--o{ Pessoa : tem
-        Aplicacao ||--o{ Log : gera
-        Permissao ||--o{ Aplicacao : exibe
-        Perfil ||--o{ Permissao : define
-        Perfil ||--o{ Exibicao : configura
+    GRUPO {
+        INT id PK
+        STRING nome_grupo
+        STRING descricao
+    }
 
-        Grupo {
-            string nome_grupo PK
-            string descricao
-            int perfil_id FK
-        }
-        Pessoa {
-            int id PK
-            blob foto3x4
-            string nome
-            string email
-            datetime data_criacao
-        }
-        Usuario {
-            int id PK
-            string usuario "Unique username"
-            string senha "Hashed password"
-            datetime ultimo_login
-            boolean ativo
-            string nome_grupo FK
-        }
-        Aplicacao {
-            string nome PK
-            string descricao
-            string caminhoExecutavel
-            blob icone
-            string categoria
-        }
-        Permissao {
-            int id PK
-            string nome
-            string descricao
-            int perfil_id FK
-            string nome_aplicacao FK
-        }
-        Log {
-            int id PK
-            string tipo
-            int usuario_id FK
-            string nome_aplicacao FK
-            datetime datahora
-            string mensagem
-        }
-        Perfil {
-            int id PK
-            string descricao
-        }
-        Exibicao {
-            int id PK
-            int perfil_id FK
-            string elementos
-        }
+    USUARIO {
+        INT id PK
+        BLOB foto3x4
+        STRING nome
+        STRING email
+        DATETIME data_criacao
+        STRING usuario
+        INT grupo_id FK
+    }
+
+    APLICACAO {
+        INT id PK
+        STRING nome
+        STRING descricao
+        STRING caminhoExecutavel
+        BLOB icone
+        STRING tipo
+    }
+
+    LOG {
+        INT id PK
+        STRING tipo
+        DATETIME ultimo_login
+        INT usuario_id FK
+        INT aplicacao_id FK
+        DATETIME datahora
+        STRING mensagem
+    }
+
+    PERFILPERMISSAO {
+        INT id PK
+        STRING descricao
+        INT grupo_id FK
+        INT aplicacao_id FK
+        STRING permissao_nome
+        STRING permissao_descricao
+    }
+
+    EXIBICAO {
+        INT id PK
+        INT perfil_permissao_id FK
+        STRING elementos
+    }
+
+    GRUPO ||--o{ USUARIO : possui
+    GRUPO ||--o{ PERFILPERMISSAO : possui
+    APLICACAO ||--o{ PERFILPERMISSAO : possui
+    PERFILPERMISSAO ||--o{ EXIBICAO : possui
+    USUARIO ||--o{ LOG : gera
+    APLICACAO ||--o{ LOG : registra
+
     </div>
 </body>
 

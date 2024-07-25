@@ -54,7 +54,7 @@
 - **elementos**: Identificadores de elementos específicos da página (ex: botões, ações).
 
 ### Banco
-![alt text](../img/bancoPP.jpg)
+![alt text](<../img/Modelo - 1.jpg>)
 
 ### Relacionamentos
 
@@ -166,7 +166,7 @@
 
 ## Diagrama:
 
-![C:\Users\ruth.silva\Desktop\exemplo-banco\img\diagramPP.svg](../img/diagramPP.svg)
+![alt text](<../img/modelo - 1.png>)
 
 ### Grupo
 - `nome_grupo` : VARCHAR(255), PRIMARY KEY

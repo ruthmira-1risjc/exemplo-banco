@@ -1,64 +1,127 @@
 # Estrutura do Banco Intranet
 
 ## Banco
-![alt text](img/bancoPP.jpg)
+
 
 <details>
 <summary>Entidades</summary>
 
 ## Entidades:
 
-### Grupo
-- **nome_grupo**: Nome do grupo e identificador único.
-- **descricao**: Descrição do grupo.
-- **perfil_id**: Chave estrangeira para a tabela Perfil.
+**Grupo**
+   - **Id**: Identificador único.
+   - **NomeGrupo**: Nome do grupo.
+   - **Descricao**: Descrição do grupo.
 
-### Pessoa
-- **id**: Identificador único da pessoa.
-- **foto3x4**: Foto da pessoa (BLOB).
-- **nome**: Nome completo do usuário.
-- **email**: Endereço de email do usuário.
-- **data_criacao**: Data de criação da conta.
+2. **Usuario**
+   - **Id**: Identificador único.
+   - **IconeId**: Chave estrangeira para a tabela `Icone`.
+   - **Nome**: Nome completo do usuário.
+   - **Email**: Endereço de email do usuário.
+   - **DataCriacao**: Data de criação da conta.
+   - **Usuario**: Nome de usuário (único).
+   - **GrupoId**: Chave estrangeira para a tabela `Grupo`.
 
-### Usuario
-- **id**: Identificador único do usuário (referência à tabela Pessoa).
-- **usuario**: Nome de usuário (único).
-- **senha**: Senha do usuário (armazenada de forma segura, e.g., hash).
-- **ultimo_login**: Data e hora do último login.
-- **ativo**: Indicador se a conta está ativa.
-- **nome_grupo**: Chave estrangeira para a tabela Grupo.
+3. **Icone**
+   - **Id**: Identificador único.
+   - **Foto3x4**: Foto da pessoa (BLOB).
+   - **Icone**: Ícone associado (BLOB).
 
-### Aplicacao
-- **nome**: Nome da aplicação e identificador único.
-- **descricao**: Descrição da aplicação.
-- **caminhoExecutavel**: Caminho do executável na rede.
-- **icone**: Ícone da aplicação (BLOB).
-- **categoria**: Categoria da aplicação (coluna, flag, ou enumerador).
+4. **Recurso**
+   - **Id**: Identificador único.
+   - **Nome**: Nome do recurso.
+   - **Descricao**: Descrição do recurso.
+   - **Rota**: Caminho do recurso na rede.
+   - **IconeId**: Chave estrangeira para a tabela `Icone`.
+   - **TipoRecursoId**: Chave estrangeira para a tabela `TipoRecurso`.
 
-### Permissao
-- **id**: Identificador único da permissão.
-- **nome**: Nome da permissão.
-- **descricao**: Descrição da permissão.
-- **perfil_id**: Chave estrangeira para a tabela Perfil.
-- **nome_aplicacao**: Chave estrangeira para a tabela Aplicacao.
+5. **TipoRecurso**
+   - **Id**: Identificador único.
+   - **Descricao**: Descrição do tipo de recurso.
+   - **Nome**: Nome do tipo de recurso.
 
-### Log
-- **id**: Identificador único do log.
-- **tipo**: Nome do tipo do log.
-- **usuario_id**: Chave estrangeira para a tabela Usuario.
-- **nome_aplicacao**: Chave estrangeira para a tabela Aplicacao.
-- **datahora**: Data e hora do log.
-- **mensagem**: Mensagem do log.
+6. **Log**
+   - **Id**: Identificador único.
+   - **Tipo**: Tipo do log.
+   - **UltimoLogin**: Data e hora do último login.
+   - **UsuarioId**: Chave estrangeira para a tabela `Usuario`.
+   - **RecursoId**: Chave estrangeira para a tabela `Recurso`.
+   - **Datahora**: Data e hora do log.
+   - **Mensagem**: Mensagem do log.
 
-### Perfil
-- **id**: Identificador único do perfil.
-- **descricao**: Descrição do perfil.
+7. **PerfilPermissao**
+   - **Id**: Identificador único.
+   - **Nome**: Nome do perfil/permissão. Pode representar um tipo ou nome descritivo.
+   - **Descricao**: Descrição do perfil/permissão.
+   - **GrupoId**: Chave estrangeira para a tabela `Grupo`.
+   - **RecursoId**: Chave estrangeira para a tabela `Recurso`.
 
-### Exibicao
-- **id**: Identificador único da exibição.
-- **perfil_id**: Chave estrangeira para a tabela Perfil.
-- **elementos**: Identificadores de elementos específicos da página (ex: botões, ações).
+8. **Exibicao**
+   - **Id**: Identificador único.
+   - **PerfilPermissaoId**: Chave estrangeira para a tabela `PerfilPermissao`.
+   - **Elemento**: Identificadores de elementos específicos da página (ex: botões, ações).
 
+</details>
+
+<details>
+<summary>Tabelas</summary>
+
+## Tabelas
+
+## Tabelas
+
+#### Grupo
+- **Id**: INT (Chave primária)
+- **NomeGrupo**: STRING
+- **Descricao**: STRING
+
+#### Usuario
+- **Id**: INT (Chave primária)
+- **IconeId**: INT (Chave estrangeira para `Icone.Id`)
+- **Nome**: STRING
+- **Email**: STRING
+- **DataCriacao**: DATETIME
+- **Usuario**: STRING
+- **GrupoId**: INT (Chave estrangeira para `Grupo.Id`)
+
+#### Icone
+- **Id**: INT (Chave primária)
+- **Foto3x4**: BLOB
+- **Icone**: BLOB
+
+#### Recurso
+- **Id**: INT (Chave primária)
+- **Nome**: STRING
+- **Descricao**: STRING
+- **Rota**: STRING
+- **IconeId**: INT (Chave estrangeira para `Icone.Id`)
+- **TipoRecursoId**: INT (Chave estrangeira para `TipoRecurso.Id`)
+
+#### TipoRecurso
+- **Id**: INT (Chave primária)
+- **Descricao**: STRING
+- **Nome**: STRING
+
+#### Log
+- **Id**: INT (Chave primária)
+- **Tipo**: STRING
+- **UltimoLogin**: DATETIME
+- **UsuarioId**: INT (Chave estrangeira para `Usuario.Id`)
+- **RecursoId**: INT (Chave estrangeira para `Recurso.Id`)
+- **Datahora**: DATETIME
+- **Mensagem**: STRING
+
+#### PerfilPermissao
+- **Id**: INT (Chave primária)
+- **Nome**: STRING
+- **Descricao**: STRING
+- **GrupoId**: INT (Chave estrangeira para `Grupo.Id`)
+- **RecursoId**: INT (Chave estrangeira para `Recurso.Id`)
+
+#### Exibicao
+- **Id**: INT (Chave primária)
+- **PerfilPermissaoId**: INT (Chave estrangeira para `PerfilPermissao.Id`)
+- **Elemento**: STRING
 </details>
 
 <details>
@@ -66,187 +129,257 @@
 
 ## Relacionamentos
 
-### 1. Grupo e Perfil
-- **Descrição**: Um grupo está associado a um perfil específico. Um perfil pode ser compartilhado entre vários grupos.
-- **Cardinalidade**:
-  - **Grupo (1, N) — (1, 1) Perfil**: Cada grupo deve ter exatamente um perfil, e um perfil pode estar associado a vários grupos ou nenhum.
-  - **Perfil (0, N) — (1, 1) Grupo**: Cada perfil pode estar associado a zero ou mais grupos.
+1. **Grupo e Usuario**
+   - **Descrição**: Um grupo pode ter vários usuários. Um usuário pertence a um grupo.
+   - **Cardinalidade**:Um para muitos (1).
+     - **Grupo (1, N) — (0, N) Usuario**: Um grupo pode ter zero ou mais usuários.
+     - **Usuario (1, 1) — (1, 1) Grupo**: Cada usuário pertence a um único grupo.
 
-### 2. Perfil e Permissao
-- **Descrição**: Cada perfil pode ter várias permissões associadas a diferentes aplicações. Cada permissão está associada a um único perfil.
-- **Cardinalidade**:
-   - **Perfil (1, N) — (1, N) Permissão**: Um perfil pode ter várias permissões.
-   - **Permissão (1, N) — (1, 1) Perfil**: Uma permissão está associada a exatamente um perfil.
+2. **Grupo e PerfilPermissao**
+   - **Descrição**: Um grupo pode ter várias permissões e perfis associados. Cada perfil pode estar associado a vários grupos.
+   - **Cardinalidade**: Muitos para muitos (N).
+     - **Grupo (1, N) — (0, N) PerfilPermissao**: Um grupo pode ter zero ou mais permissões/perfis.
+     - **PerfilPermissao (1, 1) — (1, N) Grupo**: Cada perfil/permissão pode estar associado a vários grupos.
 
-### 3. Aplicacao e Permissao
-- **Descrição**: Cada aplicação pode ter várias permissões associadas a diferentes perfis. Cada permissão está associada a uma única aplicação.
-- **Cardinalidade**:
-   - **Aplicação (1, N) — (1, N) Permissão**: Uma aplicação pode ter várias permissõe.
-   - **Permissão (1, N) — (1, N) Aplicação**: Uma permissão pode conceder acesso a várias aplicações.
+3. **Recurso e PerfilPermissao**
+   - **Descrição**: Um recurso pode ter várias permissões/perfis associados. Uma permissão/perfil está associada a um recurso.
+   - **Cardinalidade**: Muitos para muitos (N).
+     - **Recurso (1, N) — (0, N) PerfilPermissao**: Um recurso pode ter zero ou mais permissões/perfis.
+     - **PerfilPermissao (1, 1) — (1, N) Recurso**: Cada permissão/perfil está associada a um recurso.
 
-#### Exemplo Ilustrativo
+4. **PerfilPermissao e Exibicao**
+   - **Descrição**: Define quais elementos de uma página são visíveis para um perfil específico. Cada exibição está associada a um único perfil/permissão.
+   - **Cardinalidade**: Um para muitos (1).
+     - **PerfilPermissao (1, N) — (0, N) Exibicao**: Um perfil/permissão pode ter zero ou mais exibições.
+     - **Exibicao (1, 1) — (1, 1) PerfilPermissao**: Cada exibição está associada a um único perfil/permissão.
 
-- **Perfil**: "Administrador"
-  - Pode ter as seguintes permissões:
-    - **Permissão A**: Acesso total à aplicação X e Y.
-    - **Permissão B**: Acesso parcial à aplicação Z.
+5. **Usuario e Log**
+   - **Descrição**: Um usuário pode gerar vários logs. Cada log é associado a um único usuário.
+   - **Cardinalidade**: Um para muitos (1).
+     - **Usuario (1, N) — (0, N) Log**: Um usuário pode gerar zero ou mais logs.
+     - **Log (1, 1) — (1, 1) Usuario**: Cada log é associado a um único usuário.
 
-- **Aplicação**: 
-  - **Aplicação X**: Pode ser acessada por "Permissão A".
-  - **Aplicação Y**: Pode ser acessada por "Permissão A".
-  - **Aplicação Z**: Pode ser acessada por "Permissão B".
+6. **Recurso e Log**
+   - **Descrição**: Um recurso pode ter vários logs associados. Cada log está vinculado a um único recurso.
+   - **Cardinalidade**: Um para muitos (1).
+     - **Recurso (1, N) — (0, N) Log**: Um recurso pode gerar zero ou mais logs.
+     - **Log (1, 1) — (1, 1) Recurso**: Cada log está associado a um único recurso.
 
-### 4. Perfil e Exibicao
-- **Descrição:** Define quais elementos de uma página são visíveis para um perfil específico. Cada exibição está associada a um único perfil, mas um perfil pode estar associado a várias exibições.
-- **Cardinalidade:**
-    - **Perfil (1, N) — (1, N) Exibicao:** Cada perfil pode ter zero ou mais exibições.
-    - **Exibicao (1, N) — (1, N) Perfil:** Cada exibição pode estar associada a mais de um perfil.
+7. **Recurso e TipoRecurso**
+   - **Descrição**: Um recurso é classificado por um tipo específico de recurso. Cada tipo de recurso pode ser associado a vários recursos.
+   - **Cardinalidade**: Um para muitos (1).
+     - **TipoRecurso (1, N) — (0, N) Recurso**: Um tipo de recurso pode estar associado a zero ou mais recursos.
+     - **Recurso (1, 1) — (1, 1) TipoRecurso**: Cada recurso está associado a um único tipo de recurso.
 
-### 5. Pessoa e Usuario
-- **Descrição**: Cada pessoa tem um usuário associado para login. Cada usuário é vinculado a uma única pessoa.
-- **Cardinalidade**:
-  - **Pessoa (1, 1) — (1, 1) Usuario**: Cada pessoa possui exatamente um usuário associado.
-  - **Usuario (1, 1) — (1, 1) Pessoa**: Cada usuário está vinculado a uma única pessoa.
+</details>
 
-### 6. Grupo e Usuario
-- **Descrição**: Cada usuário pertence a um grupo, que define suas permissões gerais. Um grupo pode ter vários usuários.
-- **Cardinalidade**:
-  - **Grupo (0, N) — (1, 1) Usuario**: Um grupo pode ter zero ou mais usuários.
-  - **Usuario (1, 1) — (1, N) Grupo**: Cada usuário pertence a um único grupo.
+## Diagrama
+![alt text](<img/modelo final.png>)
 
-### 7. Usuario e Log
-- **Descrição**: Cada usuário pode gerar múltiplos logs. Cada log é associado a um único usuário.
-- **Cardinalidade**:
-  - **Usuario (0, N) — (1, 1) Log**: Um usuário pode gerar zero ou mais logs.
-  - **Log (1, 1) — (1, N) Usuario**: Cada log é associado a um único usuário.
+<details>
+<summary>Diagrama Mermaid Code</summary>
 
-### 8. Aplicacao e Log
-- **Descrição**: Cada aplicação pode ter vários logs associados. Cada log está vinculado a uma única aplicação.
-- **Cardinalidade**:
-  - **Aplicacao (0, N) — (1, 1) Log**: Cada aplicação pode gerar zero ou mais logs.
-  - **Log (1, 1) — (1, N) Aplicacao**: Cada log está associado a uma única aplicação.
+## Diagrama ER
 
+O diagrama a seguir representa visualmente o relacionamento entre as tabelas:
+
+```mermaid
+erDiagram
+
+    Grupo {
+        INT id PK
+        STRING nome_grupo
+        STRING descricao
+    }
+    
+    Usuario {
+        INT id PK
+        INT icone_id FK
+        STRING nome
+        STRING email
+        DATETIME data_criacao
+        STRING usuario
+        INT grupo_id FK
+    }
+
+    
+    Icone {
+        INT id PK
+        BLOB foto3x4
+        BLOB icone
+    }
+    
+    Recurso {
+        INT id PK
+        STRING nome
+        STRING descricao
+        STRING rota
+         INT icone_id FK
+        STRING tipo_recurso_id FK
+    }
+
+     TipoRecurso {
+        INT id PK
+        STRING descricao
+        STRING nome
+    }
+    
+    Log {
+        INT id PK
+        STRING tipo
+        DATETIME ultimo_login
+        INT usuario_id FK
+        INT aplicacao_id FK
+        DATETIME datahora
+        STRING mensagem
+    }
+    
+    PerfilPermissao {
+        INT id PK
+        STRING nome
+        STRING descricao
+        INT grupo_id FK
+        INT aplicacao_id FK
+    }
+    
+    Exibicao {
+        INT id PK
+        INT perfil_permissao_id FK
+        STRING elementos
+    }
+    
+    Grupo ||--o{ Usuario : "possui"
+    Grupo ||--o{ PerfilPermissao : "tem"
+    PerfilPermissao ||--o{ Recurso : "associado a"
+    PerfilPermissao ||--o{ Exibicao : "define"
+    Usuario ||--o{ Log : "gera"
+    Usuario ||--o{ Icone : "possui"
+    Recurso ||--o{ Icone : "possui"
+    Recurso ||--o{ Log : "gera"
+    Recurso ||--o{ TipoRecurso : "contem"
+```
 </details>
 
 <details>
 <summary>Pontos Importantes</summary>
 
-## **Pontos Importantes**
+## Pontos Importantes
 
-1. **Segregação de Dados**
-   - **Pessoa**: Armazena informações pessoais e não críticas.
-   - **Usuario**: Armazena informações de autenticação e controle de acesso.
+### 1. **Grupo e Usuario**
 
-2. **Associação de Grupos e Perfis**
-   - **Grupo**: Define um conjunto de usuários e está associado a um perfil específico.
-   - **Perfil**: Define as permissões e exibições específicas para grupos.
+- **Relacionamento:** Um grupo pode ter vários usuários, mas cada usuário pertence a um único grupo.
+- **Importância:** Esse relacionamento é fundamental para organizar os usuários em grupos, facilitando o gerenciamento e a aplicação de permissões ou políticas específicas.
 
-3. **Gerenciamento de Permissões e Exibições**
-   - **Permissao**: Define o acesso a aplicações e páginas para um perfil.
-   - **Exibicao**: Define permissões específicas de exibição de elementos na página para um perfil.
+**Exemplo:**
+- Um grupo chamado "Administração" pode ter usuários como "Ana", "João" e "Carlos".
+- O usuário "Ana" está associado ao grupo "Administração", e seu `GrupoId` é a chave estrangeira que referencia o `Id` do grupo.
 
-4. **Auditoria e Rastreabilidade**
-   - **Log**: Registra atividades dos usuários e ações realizadas nas aplicações.
+### 2. **Grupo e PerfilPermissao**
+
+- **Relacionamento:** Um grupo pode ter várias permissões/perfis associados, e cada perfil/permissão pode estar vinculado a vários grupos.
+- **Importância:** Esse relacionamento permite que diferentes grupos tenham acesso a diferentes conjuntos de permissões e perfis, facilitando a personalização do acesso às aplicações.
+
+**Exemplo:**
+- O grupo "Administração" pode ter um perfil chamado "Perfil Completo" que dá acesso total a todas as aplicações.
+- O grupo "Usuários" pode ter um perfil chamado "Perfil Básico" com permissões limitadas.
+
+### 3. **Aplicacao e PerfilPermissao**
+
+- **Relacionamento:** Cada aplicação pode estar associada a várias permissões/perfis, e cada perfil/permissão pode estar associado a várias aplicações.
+- **Importância:** Isso permite que as permissões de acesso às aplicações sejam flexíveis e adaptáveis às necessidades dos grupos.
+
+**Exemplo:**
+- A aplicação "Sistema de Finanças" pode ter permissões associadas como "Visualizar Relatórios" e "Editar Dados".
+- O perfil "Perfil Completo" pode ter acesso a todas as permissões da aplicação "Sistema de Finanças", enquanto o perfil "Perfil Básico" pode ter acesso apenas à visualização de relatórios.
+
+### 4. **PerfilPermissao e Exibicao**
+
+- **Relacionamento:** Um perfil/permissão pode definir várias exibições, e cada exibição está associada a um único perfil/permissão.
+- **Importância:** Define quais elementos (como botões, seções, etc.) são visíveis para cada perfil. Isso é útil para personalizar a interface com base nas permissões.
+
+**Exemplo:**
+- O perfil "Perfil Completo" pode ter exibições que mostram todas as seções do sistema.
+- O perfil "Perfil Básico" pode ter uma exibição que oculta seções avançadas.
+
+### 5. **Usuario e Log**
+
+- **Relacionamento:** Cada usuário pode gerar vários logs, e cada log é associado a um único usuário.
+- **Importância:** Permite rastrear atividades e eventos relacionados a cada usuário, ajudando na auditoria e análise de comportamento.
+
+**Exemplo:**
+- O usuário "Ana" pode ter logs que mostram suas atividades no sistema, como login e acesso a diferentes aplicações.
+
+### 6. **Aplicacao e Log**
+
+- **Relacionamento:** Cada aplicação pode gerar vários logs, e cada log está associado a uma única aplicação.
+- **Importância:** Facilita o rastreamento de eventos e atividades específicas para cada aplicação, ajudando a identificar problemas e melhorar o desempenho.
+
+**Exemplo:**
+- A aplicação "Sistema de Finanças" pode gerar logs de eventos como erros ou acessos, que ajudam a monitorar o uso e detectar falhas.
 
 </details>
 
 <details>
 <summary>Fluxo de Login</summary>
 
-## **Fluxo de Login**
+## Fluxo de Login
 
-1. **Autenticação**
-   - O usuário fornece suas credenciais (nome de usuário e senha) através da tela de login.
-   - O sistema verifica as credenciais fornecidas com as informações armazenadas na tabela `Usuario`.
+1. **Autenticação Externa**
+   - **Entrada do Usuário:** O usuário fornece suas credenciais (nome de usuário e senha) na tela de login.
+   - **Solicitação de Autenticação:** A aplicação de login envia as credenciais para o serviço de autenticação externo (outra aplicação) que valida as credenciais.
+   - **Resposta do Serviço de Autenticação:** O serviço retorna um resultado indicando se as credenciais são válidas ou não. Se válidas, o serviço pode fornecer um token de autenticação ou um identificador único do usuário.
 
 2. **Verificação de Credenciais**
-   - As credenciais são validadas contra o banco de dados.
-   - Se a autenticação for bem-sucedida, o sistema recupera o perfil associado ao grupo do usuário.
+   - **Resultado da Autenticação:** Se a autenticação for bem-sucedida, o sistema local (o sistema que gerencia o perfil e permissões) recebe um token ou identificador do usuário.
+   - **Recuperação do Perfil:** O sistema local utiliza o identificador do usuário para recuperar o perfil associado ao grupo do usuário no banco de dados, consultando a tabela `Usuario` para encontrar o `GrupoId`.
 
 3. **Recuperação do Perfil e Permissões**
-   - O sistema determina o grupo do usuário e, em seguida, obtém o perfil associado a esse grupo.
-   - A partir do perfil, o sistema obtém as permissões associadas (tabela `Permissao`) e as permissões de exibição (tabela `Exibicao`).
+   - **Determinação do Grupo:** O sistema consulta a tabela `Usuario` para identificar o grupo ao qual o usuário pertence usando o `GrupoId`.
+   - **Recuperação do Perfil:** O sistema local recupera o perfil associado ao grupo do usuário na tabela `PerfilPermissao`.
+   - **Permissões de Acesso e Exibição:** O sistema consulta as tabelas `PerfilPermissao` e `Exibicao` para obter as permissões de acesso e os elementos visíveis para o usuário com base em seu perfil.
 
 4. **Configuração do Ambiente do Usuário**
-   - **Permissões de Acesso**: Configura o acesso às aplicações e páginas do sistema de acordo com as permissões do perfil.
-   - **Permissões de Exibição**: Configura quais elementos (como botões e ações) são visíveis nas páginas com base nas permissões de exibição do perfil.
+   - **Permissões de Acesso:** O sistema ajusta o acesso às aplicações e páginas do sistema de acordo com as permissões associadas ao perfil.
+   - **Permissões de Exibição:** O sistema configura quais elementos são visíveis nas páginas (como botões e seções) com base nas permissões de exibição associadas ao perfil.
 
-5. **Registro de Atividade**
-   - O sistema gera logs para registrar a atividade de login, associando-a ao usuário e à aplicação em que a atividade ocorreu.
+5. **Registro de Log**
+   - **Criação de Log:** O sistema registra a tentativa de login e outras ações relevantes na tabela `Log`.
+   - **Informações do Log:** Inclui informações como o `UsuarioId`, o `AplicacaoId`, a `Datahora`, e uma mensagem descritiva (por exemplo, "Login bem-sucedido").
 
-</details>
+6. **Redirecionamento e Acesso**
+   - **Redirecionamento:** Após a autenticação e configuração bem-sucedida do ambiente, o usuário é redirecionado para a página inicial do sistema ou para uma página específica conforme definido pelas permissões do perfil.
 
-
-## Diagrama
-
-![alt text](img/diagramPP.png)
-
-<details>
-<summary>Tabelas</summary>
-
-## Tabelas
-
-### Grupo
-- `nome_grupo` : VARCHAR(255), PRIMARY KEY
-- `descricao` : TEXT
-- `perfil_id` : INT, FOREIGN KEY (referência à tabela Perfil)
-
-### Pessoa
-- `id` : INT, PRIMARY KEY, AUTO_INCREMENT
-- `foto3x4` : BLOB
-- `nome` : VARCHAR(255)
-- `email` : VARCHAR(255)
-- `data_criacao` : DATETIME
-
-### Usuario
-- `id` : INT, PRIMARY KEY, AUTO_INCREMENT, FOREIGN KEY (referência à tabela Pessoa)
-- `usuario` : VARCHAR(255), UNIQUE
-- `senha` : VARCHAR(255)  // Armazenar como hash seguro
-- `ultimo_login` : DATETIME
-- `nome_grupo` : VARCHAR(255), FOREIGN KEY (referência à tabela Grupo)
-
-### Aplicacao
-- `nome` : VARCHAR(255), PRIMARY KEY
-- `descricao` : TEXT
-- `caminhoExecutavel` : VARCHAR(500)
-- `icone` : BLOB
-- `categoria` : VARCHAR(255) // Pode ser uma coluna, flag, ou enumerador
-
-### Permissao
-- `id` : INT, PRIMARY KEY, AUTO_INCREMENT
-- `nome` : VARCHAR(255)
-- `descricao` : TEXT
-- `perfil_id` : INT, FOREIGN KEY (referência à tabela Perfil)
-- `nome_aplicacao` : VARCHAR(255), FOREIGN KEY (referência à tabela Aplicacao)
-
-### Log
-- `id` : INT, PRIMARY KEY, AUTO_INCREMENT
-- `tipo` : VARCHAR(255)
-- `usuario_id` : INT, FOREIGN KEY (referência à tabela Usuario)
-- `nome_aplicacao` : VARCHAR(255), FOREIGN KEY (referência à tabela Aplicacao)
-- `datahora` : DATETIME
-- `mensagem` : TEXT
-
-### Perfil
-- `id` : INT, PRIMARY KEY, AUTO_INCREMENT
-- `descricao` : TEXT
-
-### Exibicao
-- `id` : INT, PRIMARY KEY, AUTO_INCREMENT
-- `perfil_id` : INT, FOREIGN KEY (referência à tabela Perfil)
-- `elementos` : TEXT // Pode conter identificadores de elementos específicos da página (ex: botões, ações)
+7. **Gerenciamento de Sessão**
+   - **Manutenção da Sessão:** O sistema mantém a sessão ativa do usuário, garantindo que o acesso às diferentes partes do sistema seja controlado conforme as permissões do perfil.
+   - **Controle de Acesso:** Durante a sessão, o sistema verifica continuamente as permissões para garantir que o usuário possa acessar apenas as áreas permitidas.
 
 </details>
 
 <details>
-<summary>Normalização do banco</summary>
+<summary>Diagrama da Sequência do Login</summary>
 
-## Normalização do banco
-EM CONSTRUÇÃO
+![alt text](img/Diagrama-login.png)
+
+## Diagrama de Sequência
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant LoginApp
+    participant AuthService
+    participant LocalSystem
+    participant Database
+
+    User->>LoginApp: Fornece credenciais
+    LoginApp->>AuthService: Envia credenciais para autenticação
+    AuthService-->>LoginApp: Retorna resultado (token/identificador)
+    LoginApp->>LocalSystem: Envia identificador de usuário
+    LocalSystem->>Database: Consulta perfil associado ao grupo
+    Database-->>LocalSystem: Retorna perfil e permissões
+    LocalSystem->>Database: Registra tentativa de login
+    Database-->>LocalSystem: Confirmação de registro
+    LocalSystem->>User: Redireciona para página inicial
+    LocalSystem->>SessionManager: Mantém sessão ativa
+```
 
 </details>
-
-
-
-
-
