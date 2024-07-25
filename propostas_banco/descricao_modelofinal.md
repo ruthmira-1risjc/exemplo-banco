@@ -5,7 +5,7 @@
 
 ## Entidades:
 
-**Grupo**
+1. **Grupo**
    - **Id**: Identificador único.
    - **Nome**: Nome do grupo.
    - **Descricao**: Descrição do grupo.
