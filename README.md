@@ -1,7 +1,7 @@
 # Estrutura do Banco Intranet
 
 ## Banco
-
+![alt text](<img/Modelo - 1.jpg>)
 
 <details>
 <summary>Entidades</summary>
@@ -58,8 +58,10 @@
 
 8. **Exibicao**
    - **Id**: Identificador único.
+   - **Nome**: Nome da exibição.
+   - **Descricao**: descrição da exibição.
    - **PermissaoId**: Chave estrangeira para a tabela `Permissao`.
-   - **Elemento**: Identificadores de elementos específicos da página (ex: botões, ações).
+
 </details>
 
 <details>
@@ -118,7 +120,8 @@
 #### Exibicao
 - **Id**: INT (Chave primária)
 - **PermissaoId**: INT (Chave estrangeira para `Permissao.Id`)
-- **Elemento**: STRING
+- **Nome**: STRING
+- **Descricao**: STRING
 </details>
 
 <details>
