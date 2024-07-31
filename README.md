@@ -55,12 +55,12 @@
    - **Descricao**: Descrição da permissão.
    - **GrupoId**: Chave estrangeira para a tabela `Grupo`.
    - **RecursoId**: Chave estrangeira para a tabela `Recurso`.
+   - **ModoExibicaoId**: Chave estrangeira para a tabela `ModoExibicao`.
 
-8. **Exibicao**
+8. **ModoExibicao**
    - **Id**: Identificador único.
    - **Nome**: Nome da exibição.
    - **Descricao**: descrição da exibição.
-   - **PermissaoId**: Chave estrangeira para a tabela `Permissao`.
 
 </details>
 
@@ -116,10 +116,10 @@
 - **Descricao**: STRING
 - **GrupoId**: INT (Chave estrangeira para `Grupo.Id`)
 - **RecursoId**: INT (Chave estrangeira para `Recurso.Id`)
+- **ModoExibicaoId**: INT (Chave estrangeira para `ModoExibicao.Id`)
 
-#### Exibicao
+#### ModoExibicao
 - **Id**: INT (Chave primária)
-- **PermissaoId**: INT (Chave estrangeira para `Permissao.Id`)
 - **Nome**: STRING
 - **Descricao**: STRING
 </details>
@@ -237,20 +237,20 @@ erDiagram
         STRING Descricao
         INT GrupoId FK
         INT RecursoId FK
+        INT ModoExibicaoId FK
     }
     
-    Exibicao {
+    ModoExibicao {
         INT Id PK
         STRING Nome
         STRING Descricao
-        INT PermissaoId FK
 
     }
     
     Grupo ||--o{ Usuario : "possui"
     Grupo ||--o{ Permissao : "tem"
     Permissao ||--o{ Recurso : "associado a"
-    Permissao ||--o{ Exibicao : "define"
+    Permissao ||--o{ ModoExibicao : "define"
     Usuario ||--o{ Log : "gera"
     Usuario ||--o{ Icone : "possui"
     Recurso ||--o{ Icone : "possui"
@@ -292,14 +292,18 @@ erDiagram
 - A aplicação "Sistema de Finanças" pode ter permissões associadas como "Visualizar Relatórios" e "Editar Dados".
 - O perfil "Perfil Completo" pode ter acesso a todas as permissões da aplicação "Sistema de Finanças", enquanto o perfil "Perfil Básico" pode ter acesso apenas à visualização de relatórios.
 
-### 4. **Permissao e Exibicao**
+Entendi, vamos revisar o texto conforme suas mudanças. A tabela `ModoExibicao` terá quatro tipos, e a `Permissao` terá uma chave estrangeira com o ID dessas exibições. Pode haver várias permissões para uma exibição. Aqui está a revisão:
 
-- **Relacionamento:** Uma permissão pode definir várias exibições, e cada exibição está associada a um único permissão.
-- **Importância:** Define quais elementos (como botões, seções, etc.) são visíveis para cada grupo. Isso é útil para personalizar a interface com base nas permissões.
+Entendi, você quer ter múltiplas permissões em um modo de exibição. Aqui está o texto revisado para refletir essa estrutura:
+
+### 4. **Permissão e ModoExibição**
+
+- **Relacionamento:** Uma exibição pode ter várias permissões associadas, e cada permissão está vinculada a um único modo de exibição.
+- **Importância:** Define quais elementos (como botões, seções, etc.) são visíveis e interativos para cada grupo. Isso permite personalizar a interface e as capacidades de interação com base nas permissões.
 
 **Exemplo:**
-- O perfil "Perfil Completo" pode ter exibições que mostram todas as seções do sistema.
-- O perfil "Perfil Básico" pode ter uma exibição que oculta seções avançadas.
+- O modo de exibição "Avançado" pode ter permissões de leitura, edição e CRUD (Create, Read, Update, Delete).
+- O modo de exibição "Básico" pode ter permissões apenas de leitura.
 
 ### 5. **Usuario e Log**
 
