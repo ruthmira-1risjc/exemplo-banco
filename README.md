@@ -1,7 +1,7 @@
 # Estrutura do Banco Intranet
 
 ## Banco
-![alt text](<img/Modelo - 1.jpg>)
+![alt text](img/modelo_banco.png)
 
 <details>
 <summary>Entidades</summary>

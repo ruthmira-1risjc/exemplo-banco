@@ -1,6 +1,7 @@
 # Estrutura do Banco Intranet
 
 ## Banco
+![alt text](../img/modelo_banco.png)
 
 
 ## Entidades:
@@ -162,7 +163,7 @@
 
 O diagrama a seguir representa visualmente o relacionamento entre as tabelas:
 
-![alt text](<../img/modelo final.png>)
+![C:\Users\ruth.silva\Desktop\exemplo-banco\img\modelo final.svg](../img/mermaid_banco.png)
 
 ```mermaid
 erDiagram
