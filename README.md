@@ -24,14 +24,14 @@
 
 3. **Icone**
    - **Id**: Identificador único.
-   - **Foto3x4**: Foto da pessoa (BLOB).
-   - **IconeRecurso**: Ícone associado (BLOB).
+   - **CaminhoArquivo**: Foto do usuário ou ícone do recurso.
 
 4. **Recurso**
    - **Id**: Identificador único.
    - **Nome**: Nome do recurso.
    - **Descricao**: Descrição do recurso.
    - **Rota**: Caminho do recurso na rede.
+   - **TipoRotaId**: Chave estrangeira para a tabela `Tipo Rota`
    - **IconeId**: Chave estrangeira para a tabela `Icone`.
    - **TipoRecursoId**: Chave estrangeira para a tabela `TipoRecurso`.
 
@@ -62,6 +62,11 @@
    - **Nome**: Nome da exibição.
    - **Descricao**: descrição da exibição.
 
+9. **TipoRota**
+   - **Id**: Identificador único.
+   - **Tipo**: Nome do tipo da rota
+   - **Descricao**: Descrição da rota.
+
 </details>
 
 <details>
@@ -85,14 +90,14 @@
 
 #### Icone
 - **Id**: INT (Chave primária)
-- **Foto3x4**: BLOB
-- **IconeRecurso**: BLOB
+- **CaminhoArquivo**: STRING
 
 #### Recurso
 - **Id**: INT (Chave primária)
 - **Nome**: STRING
 - **Descricao**: STRING
 - **Rota**: STRING
+- **TipoRotaId**: INT (Chave estrangeira para `TipoRota.Id`)
 - **IconeId**: INT (Chave estrangeira para `Icone.Id`)
 - **TipoRecursoId**: INT (Chave estrangeira para `TipoRecurso.Id`)
 
@@ -100,6 +105,11 @@
 - **Id**: INT (Chave primária)
 - **Descricao**: STRING
 - **Nome**: STRING
+
+#### TipoRota
+- **Id**: INT (Chave primária)
+- **Tipo**: STRING
+- **Descricao**: STRING
 
 #### Log
 - **Id**: INT (Chave primária)
@@ -171,6 +181,11 @@
      - **TipoRecurso (1, N) — (0, N) Recurso**: Um tipo de recurso pode estar associado a zero ou mais recursos.
      - **Recurso (1, 1) — (1, 1) TipoRecurso**: Cada recurso está associado a um único tipo de recurso.
 
+8. **Recurso e TipoRota**
+   - **Descrição**: Um recurso é possui uma rota para o executável da aplicação ecada rota possui um tipo de rota. Cada tipo de rota pode ser associado a vários recursos.
+   - **Cardinalidade**: Um para muitos (1).
+     - **TipoRota (1, N) — (0, N) Recurso**: Um tipo de rota pode estar associado a zero ou mais recursos.
+     - **Recurso (1, 1) — (1, 1) TipoRota**: Cada recurso está associado a um único tipo de rota.
 </details>
 
 <details>
@@ -202,8 +217,7 @@ erDiagram
     
     Icone {
         INT Id PK
-        BLOB Foto3x4
-        BLOB IconeRecurso
+        STRING CaminhoArquivo
     }
     
     Recurso {
@@ -211,8 +225,9 @@ erDiagram
         STRING Nome
         STRING Descricao
         STRING Rota
-         INT IconeId FK
-        STRING TipoRecursoId FK
+        INT IconeId FK
+        INT TipoRotaId FK
+        INT TipoRecursoId FK
     }
 
      TipoRecurso {
@@ -220,6 +235,12 @@ erDiagram
         STRING Descricao
         STRING Nome
     }
+
+      TipoRota {
+      INT Id PK
+      STRING Tipo
+      STRING Descricao
+   }
     
     Log {
         INT Id PK
@@ -256,6 +277,7 @@ erDiagram
     Recurso ||--o{ Icone : "possui"
     Recurso ||--o{ Log : "gera"
     Recurso ||--o{ TipoRecurso : "contem"
+    Recurso ||--o{ TipoRota : "contem"
 ```
 </details>
 
