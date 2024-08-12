@@ -33,14 +33,20 @@
    - **Rota**: Caminho do recurso na rede.
    - **TipoRotaId**: Chave estrangeira para a tabela `Tipo Rota`
    - **IconeId**: Chave estrangeira para a tabela `Icone`.
+   - **SubTipoRecursoId**: Chave estrangeira para a tabela `SubTipoRecurso`.
+
+5. **SubTipoRecurso**
+   - **Id**: Identificador único.
+   - **Nome**: Nome do tipo de recurso.
+   - **Descricao**: Descrição do tipo de recurso.
    - **TipoRecursoId**: Chave estrangeira para a tabela `TipoRecurso`.
 
-5. **TipoRecurso**
+6. **TipoRecurso**
    - **Id**: Identificador único.
    - **Descricao**: Descrição do tipo de recurso.
    - **Nome**: Nome do tipo de recurso.
 
-6. **Log**
+7. **Log**
    - **Id**: Identificador único.
    - **Tipo**: Tipo do log.
    - **UltimoLogin**: Data e hora do último login.
@@ -49,7 +55,7 @@
    - **Datahora**: Data e hora do log.
    - **Mensagem**: Mensagem do log.
 
-7. **Permissao**
+8. **Permissao**
    - **Id**: Identificador único.
    - **Nome**: Nome da permissão. Pode representar um tipo ou nome descritivo.
    - **Descricao**: Descrição da permissão.
@@ -57,12 +63,12 @@
    - **RecursoId**: Chave estrangeira para a tabela `Recurso`.
    - **ModoExibicaoId**: Chave estrangeira para a tabela `ModoExibicao`.
 
-8. **ModoExibicao**
+9. **ModoExibicao**
    - **Id**: Identificador único.
    - **Nome**: Nome da exibição.
    - **Descricao**: descrição da exibição.
 
-9. **TipoRota**
+10. **TipoRota**
    - **Id**: Identificador único.
    - **Tipo**: Nome do tipo da rota
    - **Descricao**: Descrição da rota.
@@ -99,6 +105,12 @@
 - **Rota**: STRING
 - **TipoRotaId**: INT (Chave estrangeira para `TipoRota.Id`)
 - **IconeId**: INT (Chave estrangeira para `Icone.Id`)
+- **SubTipoRecursoId**: INT (Chave estrangeira para `SubTipoRecurso.Id`)
+
+#### SubTipoRecurso
+- **Id**: INT (Chave primária)
+- **Descricao**: STRING
+- **Nome**: STRING
 - **TipoRecursoId**: INT (Chave estrangeira para `TipoRecurso.Id`)
 
 #### TipoRecurso
@@ -175,17 +187,24 @@
      - **Recurso (1, N) — (0, N) Log**: Um recurso pode gerar zero ou mais logs.
      - **Log (1, 1) — (1, 1) Recurso**: Cada log está associado a um único recurso.
 
-7. **Recurso e TipoRecurso**
-   - **Descrição**: Um recurso é classificado por um tipo específico de recurso. Cada tipo de recurso pode ser associado a vários recursos.
-   - **Cardinalidade**: Um para muitos (1).
-     - **TipoRecurso (1, N) — (0, N) Recurso**: Um tipo de recurso pode estar associado a zero ou mais recursos.
-     - **Recurso (1, 1) — (1, 1) TipoRecurso**: Cada recurso está associado a um único tipo de recurso.
-
-8. **Recurso e TipoRota**
+7. **Recurso e TipoRota**
    - **Descrição**: Um recurso é possui uma rota para o executável da aplicação ecada rota possui um tipo de rota. Cada tipo de rota pode ser associado a vários recursos.
    - **Cardinalidade**: Um para muitos (1).
      - **TipoRota (1, N) — (0, N) Recurso**: Um tipo de rota pode estar associado a zero ou mais recursos.
      - **Recurso (1, 1) — (1, 1) TipoRota**: Cada recurso está associado a um único tipo de rota.
+
+8. **Recurso e SubTipoRecurso**
+   - **Descrição**: Pertence a um sub tipo de recurso, que por sua vez, está associado a um tipo de recurso.
+   - **Cardinalidade**: Um para muitos (1).
+   - **SubTipoRecurso (1, N) — (0, N) Recurso**: Um sub tipo de recurso pode estar associado a zero ou mais recursos.
+   - **Recurso (1, 1) — (1, 1) SubTipoRecurso**: Cada recurso está associado a um único sub tipo de recurso.
+
+9. **SubTipoRecurso e TipoRecurso**
+   - **Descrição**: Uma subcategoria específica dentro de um tipo de recurso, que agrupa os `Recursos`.Enquanto `TipoRecurso` categoriza os `SubTipoRecurso`. 
+   - **Cardinalidade**: Um para muitos (1).
+   - **TipoRecurso (1, N) — (0, N) SubTipoRecurso**: Um tipo de recurso pode estar associado a zero ou mais sub tipos de recursos.
+   - **SubTipoRecurso (1, 1) — (1, 1) TipoRecurso**: Cada sub tipo de recurso está associado a um único tipo de recurso.
+
 </details>
 
 <details>
@@ -227,8 +246,15 @@ erDiagram
         STRING Rota
         INT IconeId FK
         INT TipoRotaId FK
-        INT TipoRecursoId FK
+        INT SubTipoRecursoId FK
     }
+
+   SubTipoRecurso {
+        INT Id PK
+        STRING Descricao
+        STRING Nome
+        INT TipoRecursoId FK
+   }
 
      TipoRecurso {
         INT Id PK
@@ -276,8 +302,9 @@ erDiagram
     Usuario ||--o{ Icone : "possui"
     Recurso ||--o{ Icone : "possui"
     Recurso ||--o{ Log : "gera"
-    Recurso ||--o{ TipoRecurso : "contem"
+    Recurso ||--o{ SubTipoRecurso : "possui"
     Recurso ||--o{ TipoRota : "contem"
+    SubTipoRecurso ||--o{ TipoRecurso : "contém"
 ```
 </details>
 
@@ -314,10 +341,6 @@ erDiagram
 - A aplicação "Sistema de Finanças" pode ter permissões associadas como "Visualizar Relatórios" e "Editar Dados".
 - O perfil "Perfil Completo" pode ter acesso a todas as permissões da aplicação "Sistema de Finanças", enquanto o perfil "Perfil Básico" pode ter acesso apenas à visualização de relatórios.
 
-Entendi, vamos revisar o texto conforme suas mudanças. A tabela `ModoExibicao` terá quatro tipos, e a `Permissao` terá uma chave estrangeira com o ID dessas exibições. Pode haver várias permissões para uma exibição. Aqui está a revisão:
-
-Entendi, você quer ter múltiplas permissões em um modo de exibição. Aqui está o texto revisado para refletir essa estrutura:
-
 ### 4. **Permissão e ModoExibição**
 
 - **Relacionamento:** Uma exibição pode ter várias permissões associadas, e cada permissão está vinculada a um único modo de exibição.
@@ -342,6 +365,23 @@ Entendi, você quer ter múltiplas permissões em um modo de exibição. Aqui es
 
 **Exemplo:**
 - A aplicação "Sistema de Finanças" pode gerar logs de eventos como erros ou acessos, que ajudam a monitorar o uso e detectar falhas.
+
+### 7. **Recursos, TipoRecurso e SubTipoRecurso**
+**Exemplo:**
+- TipoRecurso:
+  - 1, "Internet", "Recursos relacionados a serviços de internet"
+  - 2, "Software", "Aplicações e ferramentas de software"
+
+- SubTipoRecurso:
+  - 1, "TI", "Recursos de TI", 1 (Relacionado ao TipoRecurso "Internet")
+  - 2, "Serviços", "Serviços web", 1 (Relacionado ao TipoRecurso "Internet")
+  - 3, "Gestão", "Ferramentas de gestão", 2 (Relacionado ao TipoRecurso "Software")
+
+- Recurso:
+  - 1, "GLPI", "Sistema de gestão de TI", 1 (Relacionado ao SubTipoRecurso "TI")
+  - 2, "Jira", "Sistema de acompanhamento de projetos", 1 (Relacionado ao SubTipoRecurso "TI")
+  - 3, "Webmail", "Serviço de email corporativo", 2 (Relacionado ao SubTipoRecurso "Serviços")
+
 
 </details>
 
@@ -407,3 +447,6 @@ sequenceDiagram
 ```
 
 </details>
+
+
+
